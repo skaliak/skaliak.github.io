@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>Peter Lindberg</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<!--[if lt IE 9]>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		<link href="css/styles.css" rel="stylesheet">
+	</head>
+	<body>
+<div class="page-container">
+  
+	<!-- top navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+       <div class="container">
+    	<div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="offcanvas" data-target=".sidebar-nav">
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+             <span class="icon-bar"></span>
+           </button>
+           <a class="navbar-brand" href="#">Software Showcase</a>
+    	</div>
+       </div>
+    </div>
+      
+    <div class="container">
+      <div class="row row-offcanvas row-offcanvas-left">
+        
+        <!-- sidebar -->
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+          <div data-spy="affix" data-offset-top="45" data-offset-bottom="90">
+            <ul class="nav" id="sidebar-nav">
+              <li><a href="#">Home</a></li>
+              <li><a href="#section1">Section 1</a></li>
+              <li><a href="#section2">Section 2</a></li>
+              <li><a href="#section3">Section 3</a></li>              
+            </ul>
+           </div>
+        </div>
+  	
+        <!-- main area -->
+        <div class="col-xs-12 col-sm-9" data-spy="scroll" data-target="#sidebar-nav">
+          <h1 id="section1">Portfolio</h1>
+
+            {% gist 1edc294a09c6b41c48c7 %}
+
+          <p>Helvetica mumblecore paleo forage disrupt. Selvage Neutra ethnic cornhole kitsch quinoa flexitarian stumptown. Etsy banh mi Vice Godard tousled flannel, ethical blog Intelligentsia kogi viral fixie fashion axe messenger bag pour-over. Stumptown fingerstache meh, Vice retro scenester asymmetrical disrupt freegan bespoke butcher crucifix vinyl. Scenester brunch banjo hella street art. Fingerstache vegan pour-over freegan, aesthetic DIY Austin direct trade Wes Anderson. Gastropub quinoa farm-to-table Tumblr, Tonx mustache PBR&B dreamcatcher hoodie post-ironic craft beer cred trust fund polaroid ethical.</p>
+    
+          <p>Banh mi four loko synth small batch quinoa PBR. Craft beer chambray put a bird on it pour-over, Schlitz mumblecore letterpress umami synth. Brooklyn Odd Future wayfarers, flannel hoodie slow-carb you probably haven't heard of them dreamcatcher Marfa put a bird on it kitsch. Etsy deep v authentic viral trust fund, butcher ennui readymade small batch single-origin coffee. Raw denim messenger bag YOLO 90's crucifix, disrupt Pitchfork distillery. Keytar swag Blue Bottle, Odd Future letterpress chillwave seitan. Ethnic post-ironic food truck fingerstache quinoa cray, direct trade Bushwick 8-bit Shoreditch flannel ethical kitsch roof party forage.</p>
+    
+          <h1 id="section2">Section 2</h1>
+          <p>Tofu art party trust fund Banksy, ethical tousled Marfa Godard banh mi paleo readymade farm-to-table gluten-free ethnic whatever. Tousled beard forage, retro McSweeney's raw denim quinoa drinking vinegar. Typewriter pour-over literally four loko. Tousled asymmetrical try-hard, hella disrupt art party Shoreditch Etsy roof party chambray. Truffaut retro readymade kale chips, craft beer selvage tousled brunch. Bushwick High Life tousled, Odd Future post-ironic quinoa cliche ethnic Pitchfork PBR disrupt irony tattooed. Authentic trust fund drinking vinegar hashtag, Helvetica Vice meh try-hard.</p>
+    
+          <h1 id="section3">Section 3</h1>
+          <p>Dreamcatcher bespoke selvage fingerstache Cosby sweater whatever. Ethical umami occupy bespoke tousled pork belly semiotics aesthetic, meh slow-carb hashtag. Raw denim flexitarian mumblecore cornhole. Echo Park semiotics pork belly Bushwick mustache master cleanse. Typewriter beard Godard, +1 tattooed blog wolf organic mlkshk post-ironic yr Tonx. Semiotics lomo fixie hella chambray freegan synth Shoreditch typewriter. Brooklyn Blue Bottle Truffaut meh, blog Pitchfork pug hashtag locavore squid 8-bit fap.</p>
+          
+        </div><!-- /.col-xs-12 main -->
+    </div><!--/.row-->
+  </div><!--/.container-->
+</div><!--/.page-container-->
+
+
+<div id="footer"><!--footer-->
+  <div class="container">
+      	<div class="row">
+          <ul class="list-unstyled">
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">About</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Services</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Studies</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">References</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Login</a>
+            </li>
+           <li class="col-sm-4 col-xs-6">
+              <a href="#">Press</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Contact</a>
+            </li>
+            <li class="col-sm-4 col-xs-6">
+              <a href="#">Impressum</a>
+            </li>
+          </ul>
+		</div><!--/row-->
+
+  </div><!--/container-->
+</div><!--/footer-->
+
+	<!-- script references -->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/scripts.js"></script>
+	</body>
+</html>
