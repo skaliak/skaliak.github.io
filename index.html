@@ -42,16 +42,18 @@
         </div>
           -->
         <!-- main area -->
-        <div class="col-xs-12 col-sm-9" ng-repeat="repo in repos">
-            <!--
-                        <h3>{{ repo.name }}</h3>
-                        <p>{{ repo.description }}</p>
-            -->
+          <!--<div class="col-xs-12 col-sm-9" ng-repeat="repo in repos">
+            --
+                          <h3>{{ repo.name }}</h3>
+                          <p>{{ repo.description }}</p>
+
+        </div>
+        -->
           <div class="col-sm-9" ng-repeat="readme in readmes">
               <div ng-bind-html="readme"></div>
               <hr>
           </div>
-    </div><!--/.row-->
+    <!--/.row-->
   </div><!--/.container-->
 </div><!--/.page-container-->
 
