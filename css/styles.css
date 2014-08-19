@@ -47,6 +47,10 @@ a {
 .text-center {
   padding-top: 20px;
 }
+.regular {
+    color: rgba(41, 147, 196, 0.69);
+    text-decoration: underline;
+}
 
 #sidebar {
   height: 100%;
