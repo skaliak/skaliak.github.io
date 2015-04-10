@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>    A Notebook about REST APIs
+</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+            <link rel="stylesheet" href="/theme/css/normalize.css">
+        <link href='//fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+        <!-- replaced static FA with cdn -->
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="/theme/css/font-awesome.min.css"> -->
+        <link rel="stylesheet" href="/theme/css/main.css">
+
+    <link rel="stylesheet" href="/theme/css/blog.css">
+    <link rel="stylesheet" href="/theme/css/github.css">
+        <script src="/theme/js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="wrapper">
+<header id="sidebar" class="side-shadow">
+    <hgroup id="site-header">
+        <a id="site-title" href=""><h1><i class="fa fa-cubes"></i> Peter Lindberg</h1></a>
+        <p id="site-desc"> Transitioning from an IT Systems Engineering career to Software Devleopment.  Recent CS graduate. </p>
+    </hgroup>
+    <nav>
+        <ul id="nav-links">
+                <li><a href="/">Blog</a></li>
+                <li><a href="/pages/about-me.html">About me</a></li>
+                <li><a href="/pages/contact-me.html">Contact</a></li>
+                <li><a href="/pdfs/Resume.pdf">Résumé</a></li>
+                <li><a href="/pages/projects.html">Projects</a></li>
+        </ul>
+        <div id="nav-services" class="centered-nav">
+                <a href="https://github.com/skaliak" target="github"><i class="fa fa-github svc-badge"></i></a>
+                <a href="http://www.linkedin.com/pub/peter-lindberg/b/9b8/a89" target="linkedin"><i class="fa fa-linkedin svc-badge"></i></a>
+        </div
+    </nav>
+<footer id="site-info">
+    <p>
+        Proudly powered by <a href="http://getpelican.com/" target="pelican">Pelican</a> and <a href="http://python.org/" target="python">Python</a>. Theme by me, forked from <a href="https://github.com/hdra/pelican-cait" target="github">cait by hndr</a>.
+    </p>
+    <p>
+        Textures by <a href="http://subtlepatterns.com/" target="subtlepatterns">Subtle Pattern</a>. Font Awesome by <a href="http://fortawesome.github.io/Font-Awesome/" target="github">Dave Grandy</a>.
+    </p>
+</footer></header>
+    <div id="post-container">
+        <ol id="post-list">
+            <li>
+                <article class="post-entry">
+                    <header class="entry-header">
+                        <time class="post-time" datetime="2015-04-09T15:37:00-07:00" pubdate>
+                            Thu 09 April 2015
+                        </time>
+                        <a href="/a-notebook-about-rest-apis.html" rel="bookmark"><h1>A Notebook about REST APIs</h1></a>
+                    </header>
+
+                    <section class="post-content">
+                        <p>This is an iPython Notebook that I wrote for a class assignment:
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Processing-REST-API-data-with-Python">Processing REST API data with Python<a class="anchor-link" href="#Processing-REST-API-data-with-Python">&#182;</a></h1>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="By-Peter-Lindberg-for-CS496,-winter-2015">By Peter Lindberg for CS496, winter 2015<a class="anchor-link" href="#By-Peter-Lindberg-for-CS496,-winter-2015">&#182;</a></h4>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So let&#39;s say you found out that your favorite website/service/whatever has a REST api.  Hopefully, if it has decent documentation, you can learn about all the resources you can create, retrieve, update, or delete, and even see some examples of how to do it.</p>
+<p>However, what might not be so obvious is <em>what to do with the data</em>.  Often, the data returned by these apis has a complicated structure, and you might not be sure of how to process it.</p>
+<p>&quot;But wait!&quot; you say, &quot;why Python?  Wouldn&#39;t I typically be accessing this kind of api client-side via JavaScript?&quot;</p>
+<p>Well, maybe... but what if you wanted to develop a fast mobile app that accessed a small subset of the data provided by a 3rd party api?  In that case, your server-side code should act as a <em>proxy</em> to the api, streamlining the essential data for easy processing by your front-end code, and removing superfluous data to reduce network traffic.  There could also be CORS issues preventing you from accessing the api via client-side js.</p>
+<p>Or maybe there is no front-end -- you just want to analyze the data, e.g. for the purpose of making a report or infographic?  In both of these cases Python is the ideal tool for the job.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="How-about-some-examples?">How about some examples?<a class="anchor-link" href="#How-about-some-examples?">&#182;</a></h3>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let&#39;s start with the api from Clever, which is for school data (i.e. students, classes, teachers, etc).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[2]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;https://api.clever.com/v1.1/districts/4fd43cc56d11340000000005/sections&#39;</span><span class="p">,</span> 
+                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Authorization&#39;</span><span class="p">:</span><span class="s">&#39;Bearer DEMO_TOKEN&#39;</span><span class="p">})</span>
+<span class="n">r</span><span class="o">.</span><span class="n">status_code</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[2]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+200
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The status was 200, so hopefully some data was returned, which should represent a list of class sections for a particular school district.  Rather than printing out the whole response, let&#39;s carefully examine it in a heirarchical fashion...</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
+
+<span class="n">j</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">backup_copy</span> <span class="o">=</span> <span class="n">copy</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>  <span class="c">#save this for later</span>
+<span class="n">j</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[3]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+[u&apos;paging&apos;, u&apos;data&apos;, u&apos;links&apos;]
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>paging</code> and <code>links</code> are probably metadata (we&#39;ll get into those later).  Looks like the actual data is going to be under <code>data</code>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[4]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="nb">type</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[4]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+list
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>data</code> is a list, so let&#39;s look at one of it&#39;s elements.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[5]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">j</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[5]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+[u&apos;data&apos;, u&apos;uri&apos;]
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Wait -- <em>another</em> <code>data</code> key?  And what is this <code>uri</code> key?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[6]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">j</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;uri&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[6]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+u&apos;/v1.1/sections/530e5979049e75a9262d0af2&apos;
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Apparently, <code>uri</code> is the uri that will retrieve this resource directly.  This may or may not be convienient depending on what we actually want to do with the data.  Let&#39;s look in <code>data</code> and hopefully we&#39;ll find an actual data object, rather than more metadata.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[7]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">j</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">&#39;data&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[7]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+{u&apos;course_name&apos;: u&apos;Group Guidance&apos;,
+ u&apos;course_number&apos;: u&apos;101&apos;,
+ u&apos;created&apos;: u&apos;2014-02-26T21:15:37.927Z&apos;,
+ u&apos;district&apos;: u&apos;4fd43cc56d11340000000005&apos;,
+ u&apos;grade&apos;: u&apos;10&apos;,
+ u&apos;id&apos;: u&apos;530e5979049e75a9262d0af2&apos;,
+ u&apos;last_modified&apos;: u&apos;2014-12-29T15:49:36.680Z&apos;,
+ u&apos;name&apos;: u&apos;Group Guidance - 101 - B. Greene (Section 1)&apos;,
+ u&apos;period&apos;: u&apos;0&apos;,
+ u&apos;school&apos;: u&apos;530e595026403103360ff9fd&apos;,
+ u&apos;sis_id&apos;: u&apos;581&apos;,
+ u&apos;students&apos;: [u&apos;530e5960049e75a9262cff4f&apos;,
+  u&apos;530e5960049e75a9262cff95&apos;,
+  u&apos;530e5961049e75a9262cffe0&apos;,
+  u&apos;530e5961049e75a9262d0027&apos;,
+  u&apos;530e5961049e75a9262d008d&apos;,
+  u&apos;530e5963049e75a9262d0180&apos;,
+  u&apos;530e5964049e75a9262d0300&apos;,
+  u&apos;530e5964049e75a9262d0302&apos;,
+  u&apos;530e5964049e75a9262d0304&apos;,
+  u&apos;530e5965049e75a9262d039e&apos;,
+  u&apos;530e5965049e75a9262d03b6&apos;,
+  u&apos;530e5965049e75a9262d03e8&apos;,
+  u&apos;530e5966049e75a9262d040c&apos;,
+  u&apos;530e5966049e75a9262d04cc&apos;,
+  u&apos;530e5967049e75a9262d05c0&apos;,
+  u&apos;530e5968049e75a9262d062f&apos;],
+ u&apos;subject&apos;: u&apos;homeroom/advisory&apos;,
+ u&apos;teacher&apos;: u&apos;530e5955d50c310f36112c11&apos;,
+ u&apos;teachers&apos;: [u&apos;530e5955d50c310f36112c11&apos;],
+ u&apos;term&apos;: {u&apos;end_date&apos;: u&apos;2013-06-01T00:00:00.000Z&apos;,
+  u&apos;name&apos;: u&apos;Y1&apos;,
+  u&apos;start_date&apos;: u&apos;2012-08-01T00:00:00.000Z&apos;}}
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally we&#39;ve got some actual data!  This object has information about a particular section of a class, with elements such as <code>name</code>, <code>grade</code>, <code>period</code>, etc.  All the associated objects are referenced by their unique id (or list of ids), rather than being included directly, with the exception of <code>term</code>, which is a nested object.  </p>
+<p>To make it easy to process all the <code>section</code> objects, let&#39;s strip away all the metadata.  The most elegant way to do this is to use a list comprehension:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[8]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">sec_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]]</span>
+<span class="nb">len</span><span class="p">(</span><span class="n">sec_list</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[8]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+100
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-all-the-stats!">Get all the stats!<a class="anchor-link" href="#Get-all-the-stats!">&#182;</a></h3>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To calculate some statistics about these sections, the first step is to do some aggregation.  We can get a list of the section class sizes (number of students) with another list comprehension:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[9]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">student_counts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;students&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">sec_list</span><span class="p">]</span>
+<span class="k">print</span> <span class="n">student_counts</span>
+<span class="k">print</span> <span class="nb">len</span><span class="p">(</span><span class="n">student_counts</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+[16, 14, 21, 13, 17, 17, 26, 26, 26, 26, 26, 26, 26, 26, 26, 16, 16, 17, 17, 17, 17, 20, 20, 20, 20, 16, 16, 17, 17, 17, 17, 16, 16, 17, 16, 17, 17, 16, 16, 17, 17, 17, 17, 19, 19, 19, 19, 19, 19, 20, 20, 20, 20, 20, 20, 16, 16, 17, 17, 17, 17, 25, 25, 25, 25, 24, 20, 20, 20, 20, 20, 19, 25, 25, 50, 19, 26, 26, 26, 26, 26, 26, 26, 26, 26, 25, 25, 25, 25, 14, 26, 26, 26, 26, 26, 26, 33, 50, 50, 33]
+100
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hmm... That&#39;s odd, it looks like there are exactly 100 sections.  There could be exactly 100 sections in this district, but what&#39;s more likely is that we&#39;ve got a subset of the whole list.  Lets go back to that <code>paging</code> object we saw before:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[10]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">j</span><span class="p">[</span><span class="s">&#39;paging&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[10]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+{u&apos;count&apos;: 381, u&apos;current&apos;: 1, u&apos;total&apos;: 4}
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Ah-ha!  Our original request returned page 1 out of 4, with a max of 100 per page.  We also now know that the total number of sections is [].  So how do we get <em>all</em> the sections?  We could make another request with the <code>limit</code> parameter set to a value higher than the total number of results:
+<a href="https://api.clever.com/v1.1/districts/4fd43cc56d11340000000005/sections?limit=400">https://api.clever.com/v1.1/districts/4fd43cc56d11340000000005/sections?limit=400</a></p>
+<p>But this is actually a <em>very bad</em> idea.  The api was designed with a paging feature for good reasons.  It prevents the client, server, and network from being overloaded by too much data.</p>
+<p>Instead, we can make use of another very convenient piece of metadata:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[11]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">j</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[11]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+[{u&apos;rel&apos;: u&apos;self&apos;,
+  u&apos;uri&apos;: u&apos;/v1.1/districts/4fd43cc56d11340000000005/sections&apos;},
+ {u&apos;rel&apos;: u&apos;next&apos;,
+  u&apos;uri&apos;: u&apos;/v1.1/districts/4fd43cc56d11340000000005/sections?starting_after=530e597a049e75a9262d0b55&apos;}]
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In <code>links</code> is the uri for the next page of results!  That was very thoughtful of the api designers to include for us!  And actually, this satisfies one of the constraints/requirements of a RESTful api:  HATEOAS.</p>
+<p>The presense of a <strong>next</strong> link makes the response like one of the classic data structures -- a <strong>linked list</strong>.</p>
+<p>Unfortunately, the <code>links</code> object does not contain the uris directly.  Instead it is a list of &quot;link objects&quot;, with each one having a <code>rel</code> property, describing what it is for, and a <code>uri</code> property with the actual uri.  If we want to be able to iterate through the pages the way we would through a linked list, we need to transform the links into a more convenient form.  Let&#39;s use a <em>dictionary comprehension</em>:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[12]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;rel&#39;</span><span class="p">]</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;uri&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]}</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[12]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+{u&apos;next&apos;: u&apos;/v1.1/districts/4fd43cc56d11340000000005/sections?starting_after=530e597a049e75a9262d0b55&apos;,
+ u&apos;self&apos;: u&apos;/v1.1/districts/4fd43cc56d11340000000005/sections&apos;}
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Time-to-iterate">Time to iterate<a class="anchor-link" href="#Time-to-iterate">&#182;</a></h3>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we have everything we need to iterate throught all the pages and build up a complete list of student totals which we can run some stats on.  A nice aspect of the paging system for this api is that the last page has a <code>current</code> in links, but no <code>next</code>.  This means that we can loop until there is no next, just as we would with a linked list:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[13]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">base_url</span> <span class="o">=</span> <span class="s">&#39;https://api.clever.com&#39;</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="s">&#39;/v1.1/districts/4fd43cc56d11340000000005/sections&#39;</span>
+<span class="n">student_totals</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">while</span> <span class="n">uri</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">uri</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Authorization&#39;</span><span class="p">:</span><span class="s">&#39;Bearer DEMO_TOKEN&#39;</span><span class="p">})</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="n">section_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]]</span>
+    <span class="n">student_totals</span> <span class="o">+=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;students&#39;</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">section_list</span><span class="p">]</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;rel&#39;</span><span class="p">]</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;uri&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]}</span>
+    <span class="n">uri</span> <span class="o">=</span> <span class="n">links</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;next&#39;</span><span class="p">)</span>
+    
+<span class="nb">len</span><span class="p">(</span><span class="n">student_totals</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[13]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+381
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We&#39;re ready to calculate some statistics about class (section) size.  There are built-ins for <code>max</code> and <code>min</code>, but not for <em>median</em> and <em>average</em>, so a couple of lambdas are needed:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[14]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">avg</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">median</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="p">)[</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It would probably be prudent to test those:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[15]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">542</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">651</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">999</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">512</span><span class="p">]</span>
+
+<span class="k">print</span> <span class="s">&quot;average: &quot;</span><span class="p">,</span> <span class="n">avg</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;median: &quot;</span><span class="p">,</span> <span class="n">median</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;max: &quot;</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;min: &quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">nums</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+average:  323.333333333
+median:  123
+max:  999
+min:  3
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And now we can run them on our student data:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[16]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">print</span> <span class="s">&quot;average section size: &quot;</span><span class="p">,</span> <span class="n">avg</span><span class="p">(</span><span class="n">student_totals</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;median section size: &quot;</span><span class="p">,</span> <span class="n">median</span><span class="p">(</span><span class="n">student_totals</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;max section size: &quot;</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">student_totals</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">&quot;min section size: &quot;</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">student_totals</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+average section size:  23.56167979
+median section size:  21
+max section size:  50
+min section size:  7
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Getting-more-detail-about-max-and-min">Getting more detail about max and min<a class="anchor-link" href="#Getting-more-detail-about-max-and-min">&#182;</a></h3>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unlike average, which is an aggregate function, max and min represent specific classes, so it might be useful to get more information about <em>which</em> classes are the biggest and smallest.  To do that, we need to collect some more info from the api, so we&#39;ll modify our call slightly:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[28]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">base_url</span> <span class="o">=</span> <span class="s">&#39;https://api.clever.com&#39;</span>
+<span class="n">uri</span> <span class="o">=</span> <span class="s">&#39;/v1.1/districts/4fd43cc56d11340000000005/sections&#39;</span>
+<span class="n">section_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">while</span> <span class="n">uri</span><span class="p">:</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">base_url</span> <span class="o">+</span> <span class="n">uri</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;Authorization&#39;</span><span class="p">:</span><span class="s">&#39;Bearer DEMO_TOKEN&#39;</span><span class="p">})</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="n">section_list</span> <span class="o">+=</span> <span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;data&#39;</span><span class="p">]]</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;rel&#39;</span><span class="p">]</span> <span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;uri&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">j</span><span class="p">[</span><span class="s">&#39;links&#39;</span><span class="p">]}</span>
+    <span class="n">uri</span> <span class="o">=</span> <span class="n">links</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;next&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this situation, it&#39;s easier to get the desired results with <code>filter</code> than with a list comprehension.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[29]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">cl</span> <span class="o">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">],</span>  <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">&#39;students&#39;</span><span class="p">]))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">section_list</span><span class="p">]</span>
+<span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="n">y</span> <span class="o">==</span> <span class="nb">max</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">cl</span><span class="p">]),</span> <span class="n">cl</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[29]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+[(u&apos;AP English Literature and Composition - 009 - B. Daniel&apos;, 50),
+ (u&apos;French III - 301 - G. Gorczany (Section 1)&apos;, 50),
+ (u&apos;French IV - 401 - G. Gorczany (Section 1)&apos;, 50),
+ (u&apos;Physical Education, Group 10A - 201 - P. McCartney&apos;, 50),
+ (u&apos;Physical Education, Group 11A - 301 - P. McCartney&apos;, 50),
+ (u&apos;Physical Education, Group 11B - 302 - P. McCartney&apos;, 50),
+ (u&apos;Physical Education, Group 12A - 401 - P. McCartney&apos;, 50),
+ (u&apos;Physical Education, Group 12B - 402 - P. McCartney&apos;, 50),
+ (u&apos;Physical Education, Group 9A - 101 - P. McCartney&apos;, 50),
+ (u&apos;Physical Education, Group 9B - 102 - P. McCartney&apos;, 50),
+ (u&apos;Spanish III - 301 - R. Gadsby (Section 1)&apos;, 50),
+ (u&apos;AP Spanish Language - 404 - R. Gadsby (Section 1)&apos;, 50)]
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[30]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span> <span class="n">y</span> <span class="o">==</span> <span class="nb">min</span><span class="p">([</span><span class="n">y</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">cl</span><span class="p">]),</span> <span class="n">cl</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[30]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+[(u&apos;Introduction to Electronics - 101 - Drake Buchla Glum&apos;, 7),
+ (u&apos;Advanced Electronics - 201 - Buchla Glum Drake&apos;, 7)]
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="A-more-general-approach">A more general approach<a class="anchor-link" href="#A-more-general-approach">&#182;</a></h3>
+</div>
+</div>
+</div>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Our next example will be from the Reddit api.  The following request gets a list (limited to 2) of posts on /r/gandalf:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[19]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.reddit.com/r/gandalf.json?limit=2&#39;</span><span class="p">,</span>
+                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s">&#39;OSU cs496 api howto ipynb&#39;</span><span class="p">})</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="n">j</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[19]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+{u&apos;data&apos;: {u&apos;after&apos;: u&apos;t3_2vpjh7&apos;,
+  u&apos;before&apos;: None,
+  u&apos;children&apos;: [{u&apos;data&apos;: {u&apos;approved_by&apos;: None,
+     u&apos;archived&apos;: False,
+     u&apos;author&apos;: u&apos;JakeNightly&apos;,
+     u&apos;author_flair_css_class&apos;: None,
+     u&apos;author_flair_text&apos;: None,
+     u&apos;banned_by&apos;: None,
+     u&apos;clicked&apos;: False,
+     u&apos;created&apos;: 1423888980.0,
+     u&apos;created_utc&apos;: 1423860180.0,
+     u&apos;distinguished&apos;: None,
+     u&apos;domain&apos;: u&apos;40.media.tumblr.com&apos;,
+     u&apos;downs&apos;: 0,
+     u&apos;edited&apos;: False,
+     u&apos;gilded&apos;: 0,
+     u&apos;hidden&apos;: False,
+     u&apos;id&apos;: u&apos;2vsxmq&apos;,
+     u&apos;is_self&apos;: False,
+     u&apos;likes&apos;: None,
+     u&apos;link_flair_css_class&apos;: None,
+     u&apos;link_flair_text&apos;: None,
+     u&apos;media&apos;: None,
+     u&apos;media_embed&apos;: {},
+     u&apos;mod_reports&apos;: [],
+     u&apos;name&apos;: u&apos;t3_2vsxmq&apos;,
+     u&apos;num_comments&apos;: 2,
+     u&apos;num_reports&apos;: None,
+     u&apos;over_18&apos;: False,
+     u&apos;permalink&apos;: u&apos;/r/Gandalf/comments/2vsxmq/gandalf_at_the_party/&apos;,
+     u&apos;report_reasons&apos;: None,
+     u&apos;saved&apos;: False,
+     u&apos;score&apos;: 17,
+     u&apos;secure_media&apos;: None,
+     u&apos;secure_media_embed&apos;: {},
+     u&apos;selftext&apos;: u&apos;&apos;,
+     u&apos;selftext_html&apos;: None,
+     u&apos;stickied&apos;: False,
+     u&apos;subreddit&apos;: u&apos;Gandalf&apos;,
+     u&apos;subreddit_id&apos;: u&apos;t5_2uz70&apos;,
+     u&apos;thumbnail&apos;: u&apos;http://b.thumbs.redditmedia.com/FSkFE7Zu_E3YJIcT3N9wewFdq_F9Y-_jkeC1wKSZK_Q.jpg&apos;,
+     u&apos;title&apos;: u&apos;Gandalf at the party&apos;,
+     u&apos;ups&apos;: 17,
+     u&apos;url&apos;: u&apos;http://40.media.tumblr.com/8a5bda9c361b01b03fe988bf0c825596/tumblr_nfbwek8YfP1t23cxko1_1280.jpg&apos;,
+     u&apos;user_reports&apos;: [],
+     u&apos;visited&apos;: False},
+    u&apos;kind&apos;: u&apos;t3&apos;},
+   {u&apos;data&apos;: {u&apos;approved_by&apos;: None,
+     u&apos;archived&apos;: False,
+     u&apos;author&apos;: u&apos;unlivablepillow&apos;,
+     u&apos;author_flair_css_class&apos;: None,
+     u&apos;author_flair_text&apos;: None,
+     u&apos;banned_by&apos;: None,
+     u&apos;clicked&apos;: False,
+     u&apos;created&apos;: 1423814357.0,
+     u&apos;created_utc&apos;: 1423785557.0,
+     u&apos;distinguished&apos;: None,
+     u&apos;domain&apos;: u&apos;youtube.com&apos;,
+     u&apos;downs&apos;: 0,
+     u&apos;edited&apos;: False,
+     u&apos;gilded&apos;: 0,
+     u&apos;hidden&apos;: False,
+     u&apos;id&apos;: u&apos;2vpjh7&apos;,
+     u&apos;is_self&apos;: False,
+     u&apos;likes&apos;: None,
+     u&apos;link_flair_css_class&apos;: None,
+     u&apos;link_flair_text&apos;: None,
+     u&apos;media&apos;: {u&apos;oembed&apos;: {u&apos;author_name&apos;: u&apos;Maran Nebbeling&apos;,
+       u&apos;author_url&apos;: u&apos;http://www.youtube.com/user/shenkeey&apos;,
+       u&apos;description&apos;: u&quot;Just ten hours of Gandalf banging his head to Run Away. I tried to keep as much of the quality as possible and as full-screen as possible (without cropping: it&apos;s hard, because the original video isn&apos;t full-screen either!) Enjoy and please share, like, subscribe, comment; all that good stuff!&quot;,
+       u&apos;height&apos;: 338,
+       u&apos;html&apos;: u&apos;&amp;lt;iframe class=&quot;embedly-embed&quot; src=&quot;//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FJLvxWNxymNc%3Ffeature%3Doembed&amp;amp;url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DJLvxWNxymNc&amp;amp;image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FJLvxWNxymNc%2Fhqdefault.jpg&amp;amp;key=2aa3c4d5f3de4f5b9120b660ad850dc9&amp;amp;type=text%2Fhtml&amp;amp;schema=youtube&quot; width=&quot;600&quot; height=&quot;338&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&apos;,
+       u&apos;provider_name&apos;: u&apos;YouTube&apos;,
+       u&apos;provider_url&apos;: u&apos;http://www.youtube.com/&apos;,
+       u&apos;thumbnail_height&apos;: 360,
+       u&apos;thumbnail_url&apos;: u&apos;http://i.ytimg.com/vi/JLvxWNxymNc/hqdefault.jpg&apos;,
+       u&apos;thumbnail_width&apos;: 480,
+       u&apos;title&apos;: u&apos;10 Hours of Gandalf Europop Nod&apos;,
+       u&apos;type&apos;: u&apos;video&apos;,
+       u&apos;url&apos;: u&apos;http://www.youtube.com/watch?v=JLvxWNxymNc&apos;,
+       u&apos;version&apos;: u&apos;1.0&apos;,
+       u&apos;width&apos;: 600},
+      u&apos;type&apos;: u&apos;youtube.com&apos;},
+     u&apos;media_embed&apos;: {u&apos;content&apos;: u&apos;&amp;lt;iframe class=&quot;embedly-embed&quot; src=&quot;//cdn.embedly.com/widgets/media.html?src=http%3A%2F%2Fwww.youtube.com%2Fembed%2FJLvxWNxymNc%3Ffeature%3Doembed&amp;amp;url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DJLvxWNxymNc&amp;amp;image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FJLvxWNxymNc%2Fhqdefault.jpg&amp;amp;key=2aa3c4d5f3de4f5b9120b660ad850dc9&amp;amp;type=text%2Fhtml&amp;amp;schema=youtube&quot; width=&quot;600&quot; height=&quot;338&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&apos;,
+      u&apos;height&apos;: 338,
+      u&apos;scrolling&apos;: False,
+      u&apos;width&apos;: 600},
+     u&apos;mod_reports&apos;: [],
+     u&apos;name&apos;: u&apos;t3_2vpjh7&apos;,
+     u&apos;num_comments&apos;: 0,
+     u&apos;num_reports&apos;: None,
+     u&apos;over_18&apos;: False,
+     u&apos;permalink&apos;: u&apos;/r/Gandalf/comments/2vpjh7/its_been_awhile_since_gandalf_cast_this_spell_on/&apos;,
+     u&apos;report_reasons&apos;: None,
+     u&apos;saved&apos;: False,
+     u&apos;score&apos;: 8,
+     u&apos;secure_media&apos;: {u&apos;oembed&apos;: {u&apos;author_name&apos;: u&apos;Maran Nebbeling&apos;,
+       u&apos;author_url&apos;: u&apos;http://www.youtube.com/user/shenkeey&apos;,
+       u&apos;description&apos;: u&quot;Just ten hours of Gandalf banging his head to Run Away. I tried to keep as much of the quality as possible and as full-screen as possible (without cropping: it&apos;s hard, because the original video isn&apos;t full-screen either!) Enjoy and please share, like, subscribe, comment; all that good stuff!&quot;,
+       u&apos;height&apos;: 338,
+       u&apos;html&apos;: u&apos;&amp;lt;iframe class=&quot;embedly-embed&quot; src=&quot;https://cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2FJLvxWNxymNc%3Ffeature%3Doembed&amp;amp;url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DJLvxWNxymNc&amp;amp;image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FJLvxWNxymNc%2Fhqdefault.jpg&amp;amp;key=2aa3c4d5f3de4f5b9120b660ad850dc9&amp;amp;type=text%2Fhtml&amp;amp;schema=youtube&quot; width=&quot;600&quot; height=&quot;338&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&apos;,
+       u&apos;provider_name&apos;: u&apos;YouTube&apos;,
+       u&apos;provider_url&apos;: u&apos;http://www.youtube.com/&apos;,
+       u&apos;thumbnail_height&apos;: 360,
+       u&apos;thumbnail_url&apos;: u&apos;https://i.embed.ly/1/image?url=http%3A%2F%2Fi.ytimg.com%2Fvi%2FJLvxWNxymNc%2Fhqdefault.jpg&amp;amp;key=b1e305db91cf4aa5a86b732cc9fffceb&apos;,
+       u&apos;thumbnail_width&apos;: 480,
+       u&apos;title&apos;: u&apos;10 Hours of Gandalf Europop Nod&apos;,
+       u&apos;type&apos;: u&apos;video&apos;,
+       u&apos;url&apos;: u&apos;http://www.youtube.com/watch?v=JLvxWNxymNc&apos;,
+       u&apos;version&apos;: u&apos;1.0&apos;,
+       u&apos;width&apos;: 600},
+      u&apos;type&apos;: u&apos;youtube.com&apos;},
+     u&apos;secure_media_embed&apos;: {u&apos;content&apos;: u&apos;&amp;lt;iframe class=&quot;embedly-embed&quot; src=&quot;https://cdn.embedly.com/widgets/media.html?src=https%3A%2F%2Fwww.youtube.com%2Fembed%2FJLvxWNxymNc%3Ffeature%3Doembed&amp;amp;url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DJLvxWNxymNc&amp;amp;image=http%3A%2F%2Fi.ytimg.com%2Fvi%2FJLvxWNxymNc%2Fhqdefault.jpg&amp;amp;key=2aa3c4d5f3de4f5b9120b660ad850dc9&amp;amp;type=text%2Fhtml&amp;amp;schema=youtube&quot; width=&quot;600&quot; height=&quot;338&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; allowfullscreen&amp;gt;&amp;lt;/iframe&amp;gt;&apos;,
+      u&apos;height&apos;: 338,
+      u&apos;scrolling&apos;: False,
+      u&apos;width&apos;: 600},
+     u&apos;selftext&apos;: u&apos;&apos;,
+     u&apos;selftext_html&apos;: None,
+     u&apos;stickied&apos;: False,
+     u&apos;subreddit&apos;: u&apos;Gandalf&apos;,
+     u&apos;subreddit_id&apos;: u&apos;t5_2uz70&apos;,
+     u&apos;thumbnail&apos;: u&apos;http://b.thumbs.redditmedia.com/nJpbgbioDWBc9nzNlEUQWMpQTH2Kb8FV6EAtf6NN0zI.jpg&apos;,
+     u&apos;title&apos;: u&apos;its been awhile since gandalf cast this spell on me..&apos;,
+     u&apos;ups&apos;: 8,
+     u&apos;url&apos;: u&apos;https://www.youtube.com/watch?v=JLvxWNxymNc&apos;,
+     u&apos;user_reports&apos;: [],
+     u&apos;visited&apos;: False},
+    u&apos;kind&apos;: u&apos;t3&apos;}],
+  u&apos;modhash&apos;: u&apos;&apos;},
+ u&apos;kind&apos;: u&apos;Listing&apos;}
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>As you can see, it&#39;s a bit of the heirarchical metadata thing going on, but aside from that, there are a <em>lot</em> of properties being returned for each listing object.</p>
+<p>Remember the scenario mentioned earlier of the client-side code streamlining the data for consumption by the front-end?  What if in this case only a couple properties were needed from each listing? Say... title and thumbnail?</p>
+<p>If only we had a nice general purpose crowbar of a function that could pry out those properties, regardless of how the data was structured.</p>
+<p>A recursive function will work nicely for this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[20]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="k">def</span> <span class="nf">has_keys</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">d</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">False</span>
+    <span class="k">return</span> <span class="bp">True</span>
+
+<span class="k">def</span> <span class="nf">extract</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sub_data</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">extract</span><span class="p">(</span><span class="n">sub_data</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">has_keys</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="n">extract</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let&#39;s try it on the reddit data, but with a higher limit this time:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[25]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;http://www.reddit.com/r/gandalf.json?limit=8&#39;</span><span class="p">,</span>
+                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;User-Agent&#39;</span><span class="p">:</span> <span class="s">&#39;OSU cs496 api howto ipynb&#39;</span><span class="p">})</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;title&#39;</span><span class="p">,</span> <span class="s">&#39;thumbnail&#39;</span><span class="p">]</span>
+<span class="n">processed_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">extract</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">processed_data</span><span class="p">)</span>
+
+<span class="n">processed_data</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[25]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+[{&apos;thumbnail&apos;: u&apos;http://b.thumbs.redditmedia.com/FSkFE7Zu_E3YJIcT3N9wewFdq_F9Y-_jkeC1wKSZK_Q.jpg&apos;,
+  &apos;title&apos;: u&apos;Gandalf at the party&apos;},
+ {&apos;thumbnail&apos;: u&apos;http://b.thumbs.redditmedia.com/nJpbgbioDWBc9nzNlEUQWMpQTH2Kb8FV6EAtf6NN0zI.jpg&apos;,
+  &apos;title&apos;: u&apos;its been awhile since gandalf cast this spell on me..&apos;},
+ {&apos;thumbnail&apos;: u&apos;http://b.thumbs.redditmedia.com/9ystXh9Wzq9GGODnvJ9ALHOpWMmp0KMKe8Ht25B_DUU.jpg&apos;,
+  &apos;title&apos;: u&apos;\u201cOnly quite a little fellow in a wide world after all.\u201d The Hobbit: The Battle of The Five Armies&apos;},
+ {&apos;thumbnail&apos;: u&apos;http://a.thumbs.redditmedia.com/ib2ezpk1n5o3QSJG4wA7WnjbMDjSwopCwP56DO_zmC0.jpg&apos;,
+  &apos;title&apos;: u&apos;Looking particularly badass, by OtisFrampton&apos;},
+ {&apos;thumbnail&apos;: u&apos;http://b.thumbs.redditmedia.com/-D02lKr4B3vl-TkQEDSqIccJ7mqXgL0WsdY7B75HU2U.jpg&apos;,
+  &apos;title&apos;: u&quot;\u202aIt&apos;s Still Middle-Earth To Me (Billy Joel Hobbit Parody)\u202c&quot;},
+ {&apos;thumbnail&apos;: u&apos;self&apos;,
+  &apos;title&apos;: u&quot;Quote of the day, November, 23rd!!! [It&apos;s my birthday]&quot;},
+ {&apos;thumbnail&apos;: u&apos;http://b.thumbs.redditmedia.com/8mbKDjEbS0nPu7GEK1v8kCgUkSMuTG2qzr4LCw9n4cA.jpg&apos;,
+  &apos;title&apos;: u&quot;Gandalf&apos;s Song, A Tomodachi Life song, 3DS.&quot;},
+ {&apos;thumbnail&apos;: u&apos;self&apos;, &apos;title&apos;: u&apos;Daily /r/Gandalf quote: 11/4/2014&apos;}]
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Nice and concise!  But if the function is truly <em>general purpose</em> it should work on a different api with no modification:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">
+In&nbsp;[23]:
+</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class="highlight-ipynb"><pre class="ipynb"><span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;grade&#39;</span><span class="p">]</span>
+<span class="n">processed_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">extract</span><span class="p">(</span><span class="n">backup_copy</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">processed_data</span><span class="p">)</span>  <span class="c">#backup_copy is the school data from earlier</span>
+
+<span class="n">processed_data</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span> <span class="c">#show the first 20</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">
+    Out[23]:</div>
+
+
+<div class="output_text output_subarea output_pyout">
+<pre>
+[{&apos;grade&apos;: u&apos;10&apos;, &apos;name&apos;: u&apos;Group Guidance - 101 - B. Greene (Section 1)&apos;},
+ {&apos;grade&apos;: u&apos;10&apos;, &apos;name&apos;: u&apos;Group Guidance - 102 - T. Vaux (Section 2)&apos;},
+ {&apos;grade&apos;: u&apos;10&apos;, &apos;name&apos;: u&apos;Group Guidance - 103 - E. Britcher (Section 3)&apos;},
+ {&apos;grade&apos;: u&apos;10&apos;, &apos;name&apos;: u&apos;Group Guidance - 104 - J. Isaacs (Section 4)&apos;},
+ {&apos;grade&apos;: u&apos;10&apos;, &apos;name&apos;: u&apos;Group Guidance - 105 - J. Cummings (Section 5)&apos;},
+ {&apos;grade&apos;: u&apos;10&apos;, &apos;name&apos;: u&apos;Group Guidance - 106 - M. Nagle (Section 6)&apos;},
+ {&apos;grade&apos;: u&apos;6&apos;, &apos;name&apos;: u&apos;Sixth Grade Advisory - 601 - S. Madison&apos;},
+ {&apos;grade&apos;: u&apos;6&apos;,
+  &apos;name&apos;: u&apos;Sixth Grade Advisory - 602 - R. Monroe (Section 2)&apos;},
+ {&apos;grade&apos;: u&apos;6&apos;,
+  &apos;name&apos;: u&apos;Sixth Grade Advisory - 603 - K. Hudson (Section 3)&apos;},
+ {&apos;grade&apos;: u&apos;7&apos;, &apos;name&apos;: u&apos;Seventh Grade Advisory - 701 - S. Madison&apos;},
+ {&apos;grade&apos;: u&apos;7&apos;, &apos;name&apos;: u&apos;Seventh Grade Advisory - 702 - R. Monroe&apos;},
+ {&apos;grade&apos;: u&apos;7&apos;, &apos;name&apos;: u&apos;Seventh Grade Advisory - 703 - K. Hudson&apos;},
+ {&apos;grade&apos;: u&apos;8&apos;, &apos;name&apos;: u&apos;Eighth Grade Advisory - 801 - S. Madison&apos;},
+ {&apos;grade&apos;: u&apos;8&apos;, &apos;name&apos;: u&apos;Eighth Grade Advisory - 802 - R. Monroe&apos;},
+ {&apos;grade&apos;: u&apos;8&apos;, &apos;name&apos;: u&apos;Eighth Grade Advisory - 803 - K. Hudson&apos;},
+ {&apos;grade&apos;: u&apos;9&apos;, &apos;name&apos;: u&apos;Group Guidance - 901 - B. Greene (Section 1)&apos;},
+ {&apos;grade&apos;: u&apos;9&apos;, &apos;name&apos;: u&apos;Group Guidance - 902 - T. Vaux (Section 2)&apos;},
+ {&apos;grade&apos;: u&apos;9&apos;, &apos;name&apos;: u&apos;Group Guidance - 903 - E. Britcher (Section 3)&apos;},
+ {&apos;grade&apos;: u&apos;9&apos;, &apos;name&apos;: u&apos;Group Guidance - 904 - J. Isaacs (Section 4)&apos;},
+ {&apos;grade&apos;: u&apos;9&apos;, &apos;name&apos;: u&apos;Group Guidance - 905 - J. Cummings (Section 5)&apos;}]
+</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It worked!  This would be particularly useful if it was necessary to aggregate data from several different apis.</p>
+<p><strong>This concludes the how-to</strong> thank you for reading!</p>
+</div>
+</div>
+</div></p>
+                    </section>
+                    <hr/>
+                    <aside class="post-meta">
+                        <p>Category: <a href="/category/python.html">Python</a></p>
+                    </aside>
+                    <hr/>
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'skaliak';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+                </article>
+            </li>
+        </ol>
+    </div>
+        </div>
+
+<script>
+    var _gaq=[['_setAccount','UA-61687565-1'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+        <script src="/theme/js/main.js"></script>
+    </body>
+</html>
