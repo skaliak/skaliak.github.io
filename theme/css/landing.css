@@ -37,6 +37,11 @@ body {
     color: #38c5c5;
     text-shadow: 0 0 12px #8e927e; }
 
+  #intro-copy a, img {
+    display: block;
+    margin: 0 auto;
+  }
+
 #nav-links {
   font-family: "Oswald", sans-serif;
   font-size: 1.8em; }
