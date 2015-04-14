@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>    Rotating a grid 45 degrees
+</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+            <link rel="stylesheet" href="/theme/css/normalize.css">
+        <link href='//fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+        <!-- replaced static FA with cdn -->
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="/theme/css/font-awesome.min.css"> -->
+        <link rel="stylesheet" href="/theme/css/main.css">
+
+    <link rel="stylesheet" href="/theme/css/blog.css">
+    <link rel="stylesheet" href="/theme/css/github.css">
+        <script src="/theme/js/vendor/modernizr-2.6.2.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="wrapper">
+<header id="sidebar" class="side-shadow">
+    <hgroup id="site-header">
+        <a id="site-title" href=""><h1><i class="fa fa-cubes"></i> Peter Lindberg</h1></a>
+        <p id="site-desc"> Transitioning from an IT Systems Engineering career to Software Devleopment.  Recent CS graduate. </p>
+    </hgroup>
+    <nav>
+        <ul id="nav-links">
+                <li><a href="/">Blog</a></li>
+                <li><a href="/pages/about-me.html">About me</a></li>
+                <li><a href="/pages/contact-me.html">Contact</a></li>
+                <li><a href="/pdfs/Resume.pdf">Résumé</a></li>
+                <li><a href="/pages/projects.html">Projects</a></li>
+        </ul>
+        <div id="nav-services" class="centered-nav">
+                <a href="https://github.com/skaliak" target="github"><i class="fa fa-github svc-badge"></i></a>
+                <a href="http://www.linkedin.com/pub/peter-lindberg/b/9b8/a89" target="linkedin"><i class="fa fa-linkedin svc-badge"></i></a>
+        </div
+    </nav>
+<footer id="site-info">
+    <p>
+        Proudly powered by <a href="http://getpelican.com/" target="pelican">Pelican</a> and <a href="http://python.org/" target="python">Python</a>. Theme by me, forked from <a href="https://github.com/hdra/pelican-cait" target="github">cait by hndr</a>.
+    </p>
+    <p>
+        Textures by <a href="http://subtlepatterns.com/" target="subtlepatterns">Subtle Pattern</a>. Font Awesome by <a href="http://fortawesome.github.io/Font-Awesome/" target="github">Dave Grandy</a>.
+    </p>
+</footer></header>
+    <div id="post-container">
+        <ol id="post-list">
+            <li>
+                <article class="post-entry">
+                    <header class="entry-header">
+                        <time class="post-time" datetime="2015-04-14T15:00:00-07:00" pubdate>
+                            Tue 14 April 2015
+                        </time>
+                        <a href="/rotating-a-grid-45-degrees.html" rel="bookmark"><h1>Rotating a grid 45 degrees</h1></a>
+                    </header>
+
+                    <section class="post-content">
+                        <html><body><h4>Some old code revisited</h4>
+<p>About 9 years ago, my primary programming language was Perl.  I had not been programming that long, and everything I knew was self-taught.  A few years prior to that I had bought a book about C++ (I think it was "teach youself c++ in 21 days" or something like that.)  But I did not make much progress with it.  I think I got frustrated and quit when pointers were introduced.  What finally forced me to learn how to write a functional program was necessity -- I needed to automate some task at work, and I knew I could do it with Perl.</p>
+<p>Anyway, in 2006, I started to work on writing a "word search" solver.  I figured that the easiest approach would be to search left to right, row by row, then <em>rotate</em> the whole grid of letters, and repeat.  This would also handle searching backwards, since when the grid was rotated 180 degrees, the letters would have reversed.  Writing a function to rotate 90° was easy, but I remember struggling with the 45° rotation for a while.</p>
+<p>Eventually I got something working:</p>
+<div class="highlight"><pre><span class="k">sub </span><span class="nf">rotate45</span> <span class="p">{</span>
+  <span class="k">my</span> <span class="nv">@rotarr</span> <span class="o">=</span> <span class="p">();</span>
+  <span class="nv">$ind</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>    <span class="c1">#index for @rotarr</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="nv">$lastind</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$tmpstr</span> <span class="o">=</span> <span class="sr">&lt;undef&gt;</span><span class="p">;</span>
+    <span class="nv">$o</span> <span class="o">=</span> <span class="nv">$i</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$x</span> <span class="o">&lt;=</span> <span class="nv">$lastind</span><span class="p">;</span> <span class="nv">$x</span><span class="o">++</span><span class="p">)</span>
+    <span class="c1">#until (my $x == $lastind)</span>
+      <span class="p">{</span>
+      <span class="nv">$letter</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$_</span><span class="p">[</span><span class="nv">$x</span><span class="p">],</span> <span class="nv">$o</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>  <span class="c1">#get the letter</span>
+      <span class="nv">$tmpstr</span> <span class="o">=</span> <span class="nb">join</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="nv">$tmpstr</span><span class="p">,</span> <span class="nv">$letter</span><span class="p">);</span>
+      <span class="nv">$o</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="c1">#build the string from the letters</span>
+    <span class="nv">$rotarr</span><span class="p">[</span><span class="nv">$ind</span><span class="p">]</span> <span class="o">=</span> <span class="s">"$tmpstr"</span><span class="p">;</span> <span class="c1">#add the string to the output array</span>
+    <span class="nv">$ind</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;=</span> <span class="nv">$lastind</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$tmpstr</span> <span class="o">=</span> <span class="sr">&lt;undef&gt;</span><span class="p">;</span>
+    <span class="nv">$o</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+     <span class="k">for</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$x</span> <span class="o">=</span> <span class="nv">$i</span><span class="p">;</span> <span class="nv">$x</span> <span class="o">&lt;=</span> <span class="nv">$lastind</span><span class="p">;</span> <span class="nv">$x</span><span class="o">++</span><span class="p">)</span>
+    <span class="c1">#until (my $x == $lastind)</span>
+      <span class="p">{</span>
+      <span class="nv">$letter</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$_</span><span class="p">[</span><span class="nv">$x</span><span class="p">],</span> <span class="nv">$o</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>  <span class="c1">#get the letter</span>
+      <span class="nv">$tmpstr</span> <span class="o">=</span> <span class="nb">join</span><span class="p">(</span><span class="s">''</span><span class="p">,</span> <span class="nv">$tmpstr</span><span class="p">,</span> <span class="nv">$letter</span><span class="p">);</span>
+      <span class="nv">$o</span><span class="o">++</span><span class="p">;</span>
+    <span class="p">}</span> <span class="c1">#build the string from the letters</span>
+    <span class="nv">$rotarr</span><span class="p">[</span><span class="nv">$ind</span><span class="p">]</span> <span class="o">=</span> <span class="s">"$tmpstr"</span><span class="p">;</span> <span class="c1">#add the string to the output array</span>
+    <span class="nv">$ind</span><span class="o">++</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nv">@rotarr</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>Although it didn't look right when it was printed, because there was no padding spaces so it looked like a triangle instead of a diamond:</p>
+<p><em>output</em></p>
+<p>This was the print function I was using in 2006:</p>
+<div class="highlight"><pre><span class="k">sub </span><span class="nf">printg</span> <span class="p">{</span>  <span class="c1">#prints the "letter grid"</span>
+  <span class="k">foreach</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">@tmp</span> <span class="o">=</span> <span class="nb">split</span><span class="p">(</span><span class="sr">//</span><span class="p">,</span> <span class="nv">$_</span><span class="p">);</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">@tmp</span><span class="p">)</span> <span class="p">{</span> <span class="k">print</span> <span class="s">"$_ "</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">print</span> <span class="s">"\n"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>I remembered this problem a year ago when I was learning C++.  I fixed the print function:</p>
+<div class="highlight"><pre><span class="k">sub </span><span class="nf">printg</span> <span class="p">{</span>  <span class="c1">#prints the "letter grid"</span>
+  <span class="k">my</span> <span class="nv">$len</span> <span class="o">=</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$_</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+  <span class="k">my</span> <span class="nv">$extrapad</span> <span class="o">=</span> <span class="p">(</span><span class="nv">$len</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">?</span> <span class="mi">1</span> <span class="p">:</span> <span class="mi">0</span><span class="p">;</span> 
+  <span class="k">foreach</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">my</span> <span class="nv">@tmp</span> <span class="o">=</span> <span class="nb">split</span><span class="p">(</span><span class="sr">//</span><span class="p">,</span> <span class="nv">$_</span><span class="p">);</span>
+    <span class="k">my</span> <span class="nv">$pad</span> <span class="o">=</span> <span class="nv">$lastind</span> <span class="o">-</span> <span class="nb">length</span><span class="p">(</span><span class="nv">$_</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">my</span> <span class="nv">$i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nv">$i</span> <span class="o">&lt;</span> <span class="nv">$pad</span><span class="p">;</span> <span class="nv">$i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span> <span class="k">print</span> <span class="s">"  "</span><span class="p">;}</span>
+    <span class="k">foreach</span> <span class="p">(</span><span class="nv">@tmp</span><span class="p">)</span> <span class="p">{</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$extrapad</span><span class="p">)</span> <span class="p">{</span><span class="k">print</span> <span class="s">"$_   "</span><span class="p">;}</span> <span class="k">else</span> <span class="p">{</span><span class="k">print</span> <span class="s">"$_ "</span><span class="p">;}</span> <span class="p">}</span>
+    <span class="k">print</span> <span class="s">"\n"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+<p>And then I decided to implement the rotation functions in C++, just for fun:</p>
+<div class="highlight"><pre><span class="cp">#include &lt;iostream&gt;</span>
+<span class="cp">#include &lt;string&gt;</span>
+<span class="cp">#include &lt;stdexcept&gt;</span>
+<span class="cp">#include &lt;vector&gt;</span>
+
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+
+
+<span class="c1">//prototypes</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">Rotate45</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">);</span>
+<span class="kt">void</span> <span class="nf">PrintGrid</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">grid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lastIndex</span><span class="p">);</span>
+<span class="n">string</span> <span class="nf">stringify</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">);</span>
+<span class="c1">//MARK</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">grid</span> <span class="o">=</span> <span class="p">{</span><span class="s">"asdfqwer"</span><span class="p">,</span>
+                    <span class="s">"oiuylkjh"</span><span class="p">,</span>
+                    <span class="s">"zxcvqwer"</span><span class="p">,</span>
+                    <span class="s">"sdfrlkjh"</span><span class="p">,</span>
+                    <span class="s">"poiuqwer"</span><span class="p">,</span>
+                    <span class="s">"asdfqwer"</span><span class="p">,</span>
+                    <span class="s">"lkjhoiuy"</span><span class="p">,</span>
+                    <span class="s">"zxcvzxcv"</span><span class="p">};</span>
+
+
+    <span class="n">PrintGrid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">rotated</span> <span class="o">=</span> <span class="n">Rotate45</span><span class="p">(</span><span class="n">grid</span><span class="p">);</span>
+
+    <span class="n">PrintGrid</span><span class="p">(</span><span class="n">rotated</span><span class="p">,</span> <span class="mi">7</span><span class="p">);</span>
+
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">s</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">Rotate45</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">rotated</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">lastind</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">length</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">lastind</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">charv</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">o</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">lastind</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">substr</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="kt">char</span> <span class="n">letter</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="n">charv</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">letter</span><span class="p">);</span>
+            <span class="n">o</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">o</span> <span class="o">&gt;</span> <span class="n">lastind</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">stringify</span><span class="p">(</span><span class="n">charv</span><span class="p">);</span>
+        <span class="n">rotated</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+    <span class="p">}</span>
+
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">lastind</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">charv</span><span class="p">;</span>
+        <span class="kt">int</span> <span class="n">o</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">lastind</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">in</span><span class="p">[</span><span class="n">x</span><span class="p">].</span><span class="n">substr</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+            <span class="kt">char</span> <span class="n">letter</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="n">charv</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">letter</span><span class="p">);</span>
+            <span class="n">o</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">o</span> <span class="o">&gt;</span> <span class="n">lastind</span><span class="p">)</span>
+                <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">stringify</span><span class="p">(</span><span class="n">charv</span><span class="p">);</span>
+        <span class="n">rotated</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">s</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">rotated</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="kt">void</span> <span class="n">PrintGrid</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">grid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">lastIndex</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">bool</span> <span class="n">extrapad</span> <span class="o">=</span> <span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="nb">true</span> <span class="o">:</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">padspaces</span> <span class="o">=</span> <span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">length</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">?</span> <span class="s">"   "</span> <span class="o">:</span> <span class="s">" "</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">grid</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">string</span> <span class="n">s</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+        <span class="kt">int</span> <span class="n">pad</span> <span class="o">=</span> <span class="n">lastIndex</span> <span class="o">-</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">pad</span><span class="p">;</span> <span class="n">p</span><span class="o">++</span><span class="p">)</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">"  "</span><span class="p">;</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">l</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span> <span class="n">l</span><span class="o">++</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">extrapad</span><span class="p">)</span>
+                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">"   "</span><span class="p">;</span>
+            <span class="k">else</span>
+                <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">" "</span><span class="p">;</span>
+
+        <span class="p">}</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">string</span> <span class="n">stringify</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">char</span> <span class="n">str</span><span class="p">[</span><span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+    <span class="p">}</span>
+    <span class="n">str</span><span class="p">[</span><span class="n">end</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">outstring</span> <span class="o">=</span> <span class="n">string</span><span class="p">(</span><span class="n">str</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">outstring</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div></body></html>
+                    </section>
+                    <hr/>
+                    <aside class="post-meta">
+                        <p>Category: <a href="/category/code.html">Code</a></p>
+                    </aside>
+                    <hr/>
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'skaliak';
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+                </article>
+            </li>
+        </ol>
+    </div>
+        </div>
+
+<script>
+    var _gaq=[['_setAccount','UA-61687565-1'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+        <script src="/theme/js/main.js"></script>
+    </body>
+</html>
