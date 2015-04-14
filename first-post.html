@@ -67,14 +67,14 @@
                     </header>
 
                     <section class="post-content">
-                        <h2>New Website</h2>
+                        <html><body><h2>New Website</h2>
 <p>My original software portfolio (code <a href="https://github.com/skaliak/skaliak.github.io/tree/old">here</a>) ran on AngularJS.  Every time it loaded, it fetched the list of my repos from the GitHub api, and grabbed the readmes of the ones that had a description set:</p>
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">gShowcase</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;gShowcase&#39;</span><span class="p">,</span> <span class="cp">[</span><span class="s1">&#39;ngSanitize&#39;</span><span class="cp">]</span><span class="p">);</span>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">gShowcase</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'gShowcase'</span><span class="p">,</span> <span class="cp">[</span><span class="s1">'ngSanitize'</span><span class="cp">]</span><span class="p">);</span>
 
-<span class="kd">var</span> <span class="nx">ghusername</span> <span class="o">=</span> <span class="s1">&#39;skaliak&#39;</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">baseurl</span> <span class="o">=</span> <span class="s1">&#39;https://api.github.com&#39;</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">reposurl</span> <span class="o">=</span> <span class="nx">baseurl</span> <span class="o">+</span> <span class="s1">&#39;/users/&#39;</span> <span class="o">+</span> <span class="nx">ghusername</span> <span class="o">+</span> <span class="s1">&#39;/repos&#39;</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">mediatype</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">accept</span><span class="o">:</span> <span class="s1">&#39;application/vnd.github.VERSION.html&#39;</span><span class="p">};</span>  <span class="c1">//to return md as rendered html</span>
+<span class="kd">var</span> <span class="nx">ghusername</span> <span class="o">=</span> <span class="s1">'skaliak'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">baseurl</span> <span class="o">=</span> <span class="s1">'https://api.github.com'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">reposurl</span> <span class="o">=</span> <span class="nx">baseurl</span> <span class="o">+</span> <span class="s1">'/users/'</span> <span class="o">+</span> <span class="nx">ghusername</span> <span class="o">+</span> <span class="s1">'/repos'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">mediatype</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">accept</span><span class="o">:</span> <span class="s1">'application/vnd.github.VERSION.html'</span><span class="p">};</span>  <span class="c1">//to return md as rendered html</span>
 
 
 <span class="kd">function</span> <span class="nx">gsController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$http</span><span class="p">)</span> <span class="p">{</span>
@@ -85,10 +85,10 @@
             <span class="nx">$scope</span><span class="p">.</span><span class="nx">readmes</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">;</span>
             <span class="nx">data</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
                 <span class="c1">//from the list of all repos, only keep the ones with a description</span>
-               <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">description</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">description</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+               <span class="k">if</span> <span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">description</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">description</span> <span class="o">!=</span> <span class="s2">""</span><span class="p">)</span>
                <span class="p">{</span>
                     <span class="nx">filtered</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
-                   <span class="nx">u</span> <span class="o">=</span> <span class="nx">baseurl</span> <span class="o">+</span> <span class="s1">&#39;/repos/&#39;</span> <span class="o">+</span> <span class="nx">ghusername</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">&#39;/readme&#39;</span><span class="p">;</span>
+                   <span class="nx">u</span> <span class="o">=</span> <span class="nx">baseurl</span> <span class="o">+</span> <span class="s1">'/repos/'</span> <span class="o">+</span> <span class="nx">ghusername</span> <span class="o">+</span> <span class="s1">'/'</span> <span class="o">+</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s1">'/readme'</span><span class="p">;</span>
                     <span class="nx">req_config</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">headers</span><span class="o">:</span> <span class="nx">mediatype</span> <span class="p">};</span>
                    <span class="nx">$http</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">u</span><span class="p">,</span> <span class="nx">req_config</span><span class="p">)</span>
                        <span class="p">.</span><span class="nx">success</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">readme_html</span><span class="p">)</span> <span class="p">{</span>
@@ -96,30 +96,28 @@
                        <span class="p">})</span>
                        <span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">readme_html</span><span class="p">)</span> <span class="p">{</span>
                            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">u</span><span class="p">);</span>
-                           <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;error:&quot;</span> <span class="o">+</span> <span class="nx">readme_html</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
+                           <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"error:"</span> <span class="o">+</span> <span class="nx">readme_html</span><span class="p">.</span><span class="nx">message</span><span class="p">);</span>
                    <span class="p">})</span>
                <span class="p">}</span>
             <span class="p">});</span>
             <span class="nx">$scope</span><span class="p">.</span><span class="nx">repos</span> <span class="o">=</span> <span class="nx">filtered</span><span class="p">;</span>
         <span class="p">})</span>
         <span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&quot;error:&quot;</span> <span class="o">+</span> <span class="nx">data</span><span class="p">);</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"error:"</span> <span class="o">+</span> <span class="nx">data</span><span class="p">);</span>
         <span class="p">});</span>
 <span class="p">}</span>
 </pre></div>
-
-
 <p>I was pretty proud of this, but it lacked flexibility.  So I decided to start over with somthing that would be more maintainable, give me more control, and allow for easy blogging.  I thought about using <a href="http://mezzanine.jupo.org/">Mezzanine</a>, but that would require a server that could run Django, so I wouldn't be able to host it on GitHub Pages.</p>
 <p>I settled on using <a href="http://blog.getpelican.com/">Pelican</a>, a static site generator written in Python.  I still liked the idea of generating content automatically from my GitHub readmes, so I wrote this script to fill that requirement:</p>
-<div class="highlight"><pre><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">get all the readmes for my repos that have a description set and aren&#39;t forks</span>
-<span class="sd">&quot;&quot;&quot;</span>
+<div class="highlight"><pre><span class="sd">"""</span>
+<span class="sd">get all the readmes for my repos that have a description set and aren't forks</span>
+<span class="sd">"""</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 
-<span class="n">GH_API</span> <span class="o">=</span> <span class="s">&#39;https://api.github.com&#39;</span>
-<span class="n">USERNAME</span> <span class="o">=</span> <span class="s">&#39;skaliak&#39;</span>
+<span class="n">GH_API</span> <span class="o">=</span> <span class="s">'https://api.github.com'</span>
+<span class="n">USERNAME</span> <span class="o">=</span> <span class="s">'skaliak'</span>
 
 
 <span class="k">def</span> <span class="nf">get_json</span><span class="p">(</span><span class="n">theurl</span><span class="p">):</span>
@@ -129,41 +127,41 @@
 
 
 <span class="k">def</span> <span class="nf">get_filtered_repos</span><span class="p">():</span>
-    <span class="n">all_repos</span> <span class="o">=</span> <span class="n">get_json</span><span class="p">(</span><span class="n">GH_API</span> <span class="o">+</span> <span class="s">&#39;/users/&#39;</span> <span class="o">+</span> <span class="n">USERNAME</span> <span class="o">+</span> <span class="s">&#39;/repos&#39;</span><span class="p">)</span>
+    <span class="n">all_repos</span> <span class="o">=</span> <span class="n">get_json</span><span class="p">(</span><span class="n">GH_API</span> <span class="o">+</span> <span class="s">'/users/'</span> <span class="o">+</span> <span class="n">USERNAME</span> <span class="o">+</span> <span class="s">'/repos'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">all_repos</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_repos</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;description&#39;</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x</span><span class="p">[</span><span class="s">&#39;fork&#39;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">all_repos</span> <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="s">'description'</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">x</span><span class="p">[</span><span class="s">'fork'</span><span class="p">]]</span>
 
 
 <span class="k">def</span> <span class="nf">get_readme_content</span><span class="p">(</span><span class="n">repo</span><span class="p">):</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="n">repo</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;/readme&#39;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">repo</span><span class="p">[</span><span class="s">'url'</span><span class="p">]</span> <span class="o">+</span> <span class="s">'/readme'</span>
     <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
-        <span class="n">url</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">&#39;download_url&#39;</span><span class="p">]</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s">'download_url'</span><span class="p">]</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span>
 
 
-<span class="k">def</span> <span class="nf">download_readme</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">file_to_write</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">):</span>
-    <span class="k">print</span> <span class="s">&quot;downloading readme for &quot;</span><span class="p">,</span> <span class="n">repo</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span>
+<span class="k">def</span> <span class="nf">download_readme</span><span class="p">(</span><span class="n">repo</span><span class="p">,</span> <span class="n">file_to_write</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">save_dir</span><span class="o">=</span><span class="s">'.'</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">"downloading readme for "</span><span class="p">,</span> <span class="n">repo</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span>
     <span class="n">content</span> <span class="o">=</span> <span class="n">get_readme_content</span><span class="p">(</span><span class="n">repo</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">content</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">file_to_write</span><span class="p">:</span>
             <span class="n">file_to_write</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
-            <span class="n">file_to_write</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">---</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span> <span class="c">#horizontal line</span>
+            <span class="n">file_to_write</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">'</span><span class="se">\n</span><span class="s">---</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span> <span class="c">#horizontal line</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">fpath</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">repo</span><span class="p">[</span><span class="s">&#39;name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s">&#39;.md&#39;</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">fpath</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s">'/'</span> <span class="o">+</span> <span class="n">repo</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">+</span> <span class="s">'.md'</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">download_all_readmes</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">,</span> <span class="n">combine_to</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">download_all_readmes</span><span class="p">(</span><span class="n">save_dir</span><span class="o">=</span><span class="s">'.'</span><span class="p">,</span> <span class="n">combine_to</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="n">repos</span> <span class="o">=</span> <span class="n">get_filtered_repos</span><span class="p">()</span>
-    <span class="k">print</span> <span class="s">&quot;found </span><span class="si">%d</span><span class="s"> repos&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">repos</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">"found </span><span class="si">%d</span><span class="s"> repos"</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">repos</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">combine_to</span><span class="p">:</span>
-        <span class="n">fname</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">combine_to</span> <span class="o">+</span> <span class="s">&#39;.md&#39;</span>
-        <span class="k">print</span> <span class="s">&quot;combining all readmes into file &quot;</span><span class="p">,</span> <span class="n">fname</span>
-        <span class="n">open_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="n">save_dir</span> <span class="o">+</span> <span class="s">'/'</span> <span class="o">+</span> <span class="n">combine_to</span> <span class="o">+</span> <span class="s">'.md'</span>
+        <span class="k">print</span> <span class="s">"combining all readmes into file "</span><span class="p">,</span> <span class="n">fname</span>
+        <span class="n">open_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">open_file</span> <span class="o">=</span> <span class="bp">None</span>
     <span class="k">for</span> <span class="n">repo</span> <span class="ow">in</span> <span class="n">repos</span><span class="p">:</span>
@@ -172,20 +170,18 @@
         <span class="n">open_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&#39;Download readmes from github.&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-d&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;relative directory to download to&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-c&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;file to combine into&#39;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'Download readmes from github.'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-d'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'relative directory to download to'</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">'?'</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">'.'</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">'-c'</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">'file to combine into'</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">'?'</span><span class="p">)</span>
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
 
-    <span class="c">#print &quot;\n\ncommand would be download_all_readmes(%s, %s)\n\n&quot; % (args.d, args.c)</span>
+    <span class="c">#print "\n\ncommand would be download_all_readmes(%s, %s)\n\n" % (args.d, args.c)</span>
     <span class="n">download_all_readmes</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">d</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">c</span><span class="p">)</span>
-    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">done</span><span class="se">\n\n</span><span class="s">&quot;</span>
+    <span class="k">print</span> <span class="s">"</span><span class="se">\n</span><span class="s">done</span><span class="se">\n\n</span><span class="s">"</span>
 </pre></div>
-
-
-<p>I forked <a href="https://github.com/hdra/pelican-cait">this theme</a> and tweaked it a bit.  So far I'm pretty pleased with the result.</p>
+<p>I forked <a href="https://github.com/hdra/pelican-cait">this theme</a> and tweaked it a bit.  So far I'm pretty pleased with the result.</p></body></html>
                     </section>
                     <hr/>
                     <aside class="post-meta">

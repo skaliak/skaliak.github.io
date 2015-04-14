@@ -65,14 +65,14 @@
                         <a href="/first-post.html" rel="bookmark"><h1>First Post!</h1></a>
                     </header>
                     <section class="post-content">
-                        <h2>New Website</h2>
+                        <html><body><h2>New Website</h2>
 <p>My original software portfolio (code <a href="https://github.com/skaliak/skaliak.github.io/tree/old">here</a>) ran on AngularJS.  Every time it loaded, it fetched the list of my repos from the GitHub api, and grabbed the readmes of the ones that had a description set:</p>
-<div class="highlight"><pre><span class="kd">var</span> <span class="nx">gShowcase</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">&#39;gShowcase&#39;</span><span class="p">,</span> <span class="cp">[</span><span class="s1">&#39;ngSanitize&#39;</span><span class="cp">]</span><span class="p">);</span>
+<div class="highlight"><pre><span class="kd">var</span> <span class="nx">gShowcase</span> <span class="o">=</span> <span class="nx">angular</span><span class="p">.</span><span class="nx">module</span><span class="p">(</span><span class="s1">'gShowcase'</span><span class="p">,</span> <span class="cp">[</span><span class="s1">'ngSanitize'</span><span class="cp">]</span><span class="p">);</span>
 
-<span class="kd">var</span> <span class="nx">ghusername</span> <span class="o">=</span> <span class="s1">&#39;skaliak&#39;</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">baseurl</span> <span class="o">=</span> <span class="s1">&#39;https://api.github.com&#39;</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">reposurl</span> <span class="o">=</span> <span class="nx">baseurl</span> <span class="o">+</span> <span class="s1">&#39;/users/&#39;</span> <span class="o">+</span> <span class="nx">ghusername</span> <span class="o">+</span> <span class="s1">&#39;/repos&#39;</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">mediatype</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">accept</span><span class="o">:</span> <span class="s1">&#39;application/vnd.github.VERSION.html&#39;</span><span class="p">};</span>  <span class="c1">//to return md as rendered html</span>
+<span class="kd">var</span> <span class="nx">ghusername</span> <span class="o">=</span> <span class="s1">'skaliak'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">baseurl</span> <span class="o">=</span> <span class="s1">'https://api.github.com'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">reposurl</span> <span class="o">=</span> <span class="nx">baseurl</span> <span class="o">+</span> <span class="s1">'/users/'</span> <span class="o">+</span> <span class="nx">ghusername</span> <span class="o">+</span> <span class="s1">'/repos'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">mediatype</span> <span class="o">=</span> <span class="p">{</span> <span class="nx">accept</span><span class="o">:</span> <span class="s1">'application/vnd.github.VERSION.html'</span><span class="p">};</span>  <span class="c1">//to return md as rendered html</span>
 
 
 <span class="kd">function</span> <span class="nx">gsController</span><span class="p">(</span><span class="nx">$scope</span><span class="p">,</span> <span class="nx">$http</span><span class="p">)</span> <span class="p">{</span>
@@ -82,7 +82,7 @@
             <span class="nx">filtered</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">;</span>
             <span class="nx">$scope</span><span class="p">.</span><span class="nx">readmes</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">;</span>
             <span class="nx">data</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">obj</span><span class="p">)</span> <span class="p">{</span>
-                <span class="c1">//from the list of all repos, only keep the ones ...</span></pre></div>
+                <span class="c1">//from the list of all repos, only keep the ones ...</span></pre></div></body></html>
                     </section>
                     <a href="/first-post.html">more...</a>
                 </article>
