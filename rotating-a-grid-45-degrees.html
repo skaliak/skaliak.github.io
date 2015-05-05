@@ -104,7 +104,31 @@
 <span class="p">}</span>
 </pre></div>
 <p>Although it didn't look right when it was printed, because there was no padding spaces so it looked like a triangle instead of a diamond:</p>
-<p><em>output</em></p>
+<div class="highlight"><pre>a s d f q w e r 
+o i u y l k j h 
+z x c v q w e r 
+s d f r l k j h 
+p o i u q w e r 
+a s d f q w e r 
+l k j h o i u y 
+z x c v z x c v 
+
+r 
+e h 
+w j r 
+q k e h 
+f l w j r 
+d y q k e r 
+s u v l w e y 
+a i c r q w u v 
+o x f u q i c 
+z d i f o x 
+s o d h z 
+p s j v 
+a k c 
+l x 
+z 
+</pre></div>
 <p>This was the print function I was using in 2006:</p>
 <div class="highlight"><pre><span class="k">sub </span><span class="nf">printg</span> <span class="p">{</span>  <span class="c1">#prints the "letter grid"</span>
   <span class="k">foreach</span> <span class="p">(</span><span class="nv">@_</span><span class="p">)</span> <span class="p">{</span>
@@ -248,6 +272,23 @@
 
     <span class="k">return</span> <span class="n">outstring</span><span class="p">;</span>
 <span class="p">}</span>
+</pre></div>
+<p>Output:</p>
+<div class="highlight"><pre>              r   
+            e   h   
+          w   j   r   
+        q   k   e   h   
+      f   l   w   j   r   
+    d   y   q   k   e   r   
+  s   u   v   l   w   e   y   
+a   i   c   r   q   w   u   v   
+  o   x   f   u   q   i   c   
+    z   d   i   f   o   x   
+      s   o   d   h   z   
+        p   s   j   v   
+          a   k   c   
+            l   x   
+              z   
 </pre></div></body></html>
                     </section>
                     <hr/>
